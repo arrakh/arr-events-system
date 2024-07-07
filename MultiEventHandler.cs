@@ -29,7 +29,7 @@ namespace Arr.EventsSystem
                              
             if (method == null)
             {
-                #if ARR_SUPPRESS_EXCEPTIONS
+                #if ARR_SHOW_EXCEPTIONS
                 throw new Exception($"Failed to find the Register method of type {genericEventType}.");
                 #endif
                 return;

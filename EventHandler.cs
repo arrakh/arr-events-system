@@ -22,7 +22,20 @@ namespace Arr.EventsSystem
                 ((Action<TParam>) listenerDelegate)?.Invoke(data);
         }
         
-        
+        public void FireUnsafe(Type eventType, object data)
+        {
+            if (!eventListeners.TryGetValue(eventType, out var listener)) return;
+            foreach (var listenerDelegate in listener)
+            {
+                var method = listenerDelegate.Method;
+                var parameters = method.GetParameters();
+                if (parameters.Length == 1 && parameters[0].ParameterType == eventType)
+                {
+                    method.Invoke(listenerDelegate.Target, new[] { data });
+                }
+            }
+        }
+
         public void Unregister<TParam>(IEventListener<TParam> listener) where TParam : struct
         {
             var eventType = typeof(TParam);

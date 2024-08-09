@@ -1,4 +1,6 @@
-﻿namespace Arr.EventsSystem
+﻿using System;
+
+namespace Arr.EventsSystem
 {
     public static class GlobalEvents
     {
@@ -12,6 +14,7 @@
         public static EventHandler Instance => _handler;
 
         public static void Fire<TParam>(TParam data) where TParam : struct => _handler.Fire(data);
+        public static void FireUnsafe(Type eventType, object data) => _handler.FireUnsafe(eventType, data);
         public static TReturn Query<TReturn>() => _handler.Query<TReturn>();
         public static TReturn Query<TReturn, TParam>(TParam data) where TParam : struct => _handler.Query<TReturn, TParam>(data);
         

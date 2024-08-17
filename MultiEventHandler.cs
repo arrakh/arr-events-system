@@ -12,8 +12,13 @@ namespace Arr.EventsSystem
             foreach (var i in interfaces)
             {
                 if (!i.IsGenericType) continue;
-
+                
                 var genericType = i.GetGenericTypeDefinition();
+
+                if (genericType != typeof(IEventListener<>) &&
+                    genericType != typeof(IQueryProvider<>) &&
+                    genericType != typeof(IQueryProvider<,>)) continue; 
+
                 var args = i.GetGenericArguments();
                 InvokeEventFunction(nameof(Register), listener, genericType, method => method.MakeGenericMethod(args));
             }
@@ -49,6 +54,11 @@ namespace Arr.EventsSystem
                 if (!i.IsGenericType) continue;
 
                 var genericType = i.GetGenericTypeDefinition();
+
+                if (genericType != typeof(IEventListener<>) &&
+                    genericType != typeof(IQueryProvider<>) &&
+                    genericType != typeof(IQueryProvider<,>)) continue; 
+                
                 var args = i.GetGenericArguments();
                 InvokeEventFunction(nameof(Unregister), listener, genericType, method => method.MakeGenericMethod(args));
             }

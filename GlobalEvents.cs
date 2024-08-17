@@ -20,6 +20,9 @@ namespace Arr.EventsSystem
         
         public static TReturn Query<TReturn, TParam>(TParam data) where TReturn : class 
             where TParam : struct => _handler.Query<TReturn, TParam>(data);
+
+        public static void RegisterMultipleUnsafe(object instance) => _handler.RegisterMultiple(instance);
+        public static void UnregisterMultipleUnsafe(object instance) => _handler.UnregisterMultiple(instance);
         
         public static void Register<TParam>(IEventListener<TParam> listener) where TParam : struct => _handler.Register(listener);
         public static void RegisterQuery<TReturn>(IQueryProvider<TReturn> provider) => _handler.Register(provider);
